@@ -19,24 +19,24 @@ export async function main(ns) {
         }
     }
 
+    // OPTIONAL TODO : add other variables if needed
+    let data = "";
     for (let i = 0; i < servers.length; i++){
-        ns.tprintf("\n");
-        
         let server = ns.getServer(servers[i]);
-        // OPTIONAL TODO : add other variables if needed
-        ns.tprintf(`Host Name: ${server.hostname}`);
-        ns.tprintf(`IP : ${server.ip}`);
-        ns.tprintf(`Backdoor Installed: ${server.backdoorInstalled}`);
-        ns.tprintf(`Max RAM: ${server.maxRam}`);
-        ns.tprintf(`Base Security: ${server.baseDifficulty}`);
-        ns.tprintf(`Min Security: ${server.minDifficulty}`);
-        ns.tprintf(`Money Available: ${server.moneyAvailable}`);
-        ns.tprintf(`Max Money: ${server.moneyMax}`);
-        ns.tprintf(`Required Ports for NUKE: ${server.numOpenPortsRequired}`);
-        ns.tprintf(`Current Open Ports: ${server.openPortCount}`);
-        ns.tprintf(`Required Hacking Skill: ${server.requiredHackingSkill}`);
-        ns.tprintf(`Growth Rate: ${server.serverGrowth}`);
-
-        ns.tprintf("\n");
+        data += "\n";
+        data += `Host Name: ${server.hostname}\n`;
+        data += `IP : ${server.ip}\n`;
+        data += `Backdoor Installed: ${server.backdoorInstalled}\n`;
+        data += `Max RAM: ${server.maxRam}\n`;
+        data += `Base Security: ${server.baseDifficulty}\n`;
+        data += `Min Security: ${server.minDifficulty}\n`;
+        data += `Money Available: ${server.moneyAvailable}\n`;
+        data += `Max Money: ${server.moneyMax}\n`;
+        data += `Required Ports for NUKE: ${server.numOpenPortsRequired}\n`;
+        data += `Current Open Ports: ${server.openPortCount}\n`;
+        data += `Required Hacking Skill: ${server.requiredHackingSkill}\n`;
+        data += `Growth Rate: ${server.serverGrowth}\n`;
+        data += "\n";
     }
+    ns.write("scan-results.txt", data, "w");
 }
