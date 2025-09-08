@@ -3,6 +3,9 @@ export async function main(ns) {
     /**
      * Grow-Weaken-Hack Manager
      * - an attempt at managing the grow-weaken-hack scripts in hacking a target server
+     * - implements 'loop algorithm'
+     * - RAM: 5.25GB
+     * - TODO : Optimize
      */
 
     // Basic Parameters
@@ -43,17 +46,16 @@ export async function main(ns) {
     let gi = hackThreads;
     let wi = hackThreads + groThreads;
 
-    // ns.tprintf(`${totalRam / Math.ceil(avgScriptRam)} ${hackThreads} ${groThreads} ${weakenThreads} 0 ${gi} ${wi}`);
-
-    let threads = 0 // totalRam / Math.ceil(avgScriptRam);
+    let threads = 0
     for (let i = 0; i < servers.length; i++){
         let server = servers[i];
         let ports = ns.getServer(server).openPortCount;
         let maxThreads = ns.getServerMaxRam(server) / Math.ceil(avgScriptRam);
         let addedThreads = 0;
+        
         if (threads < gi && (ports === ns.getServerNumPortsRequired(server) || server.includes("pserv"))){
             let currAddedThreads = 0;
-            while (threads < gi && addedThreads < maxThreads){
+            while (threads + addedThreads < gi && addedThreads < maxThreads){
                 addedThreads+=1;
                 currAddedThreads+=1;
             }
@@ -62,9 +64,10 @@ export async function main(ns) {
             }
             threads += currAddedThreads;
         }
-        else if (threads < wi && (ports === ns.getServerNumPortsRequired(server) || server.includes("pserv"))){
+        
+        if (threads < wi && (ports === ns.getServerNumPortsRequired(server) || server.includes("pserv"))){
             let currAddedThreads = 0;
-            while (threads < wi && addedThreads < maxThreads){
+            while (threads + addedThreads < wi && addedThreads < maxThreads){
                 addedThreads+=1;
                 currAddedThreads+=1;
             }
@@ -73,9 +76,10 @@ export async function main(ns) {
             }
             threads += currAddedThreads;
         }
-        else if (threads >= wi && (ports === ns.getServerNumPortsRequired(server) || server.includes("pserv"))) {
+        
+        if (threads >= wi && (ports === ns.getServerNumPortsRequired(server) || server.includes("pserv"))) {
             let currAddedThreads = 0;
-            while (threads >= wi && addedThreads < maxThreads){
+            while (threads + addedThreads >= wi && addedThreads < maxThreads){
                 addedThreads+=1;
                 currAddedThreads+=1;
             }
