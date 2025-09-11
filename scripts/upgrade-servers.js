@@ -19,6 +19,9 @@ export async function main(ns) {
         if (ns.getServerMoneyAvailable("home") > ns.getPurchasedServerCost(ram)){
             ns.upgradePurchasedServer("pserv-" + i, ram);
         }
-        await ns.sleep(1000);
+        else{
+            i--;
+            await ns.sleep(1000);
+        }
     }
 }
