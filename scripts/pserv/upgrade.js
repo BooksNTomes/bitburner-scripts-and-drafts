@@ -16,12 +16,9 @@ export async function main(ns) {
     }
 
     for (let i = 0; i < servers.length; i++){
-        if (ns.getServerMoneyAvailable("home") > ns.getPurchasedServerCost(ram)){
-            ns.upgradePurchasedServer("pserv-" + i, ram);
+        while (ns.getServerMoneyAvailable("home") <= ns.getPurchasedServerCost(ram)){
+            await ns.sleep(10000);
         }
-        else{
-            i--;
-            await ns.sleep(1000);
-        }
+        ns.upgradePurchasedServer("pserv-" + i, ram);
     }
 }

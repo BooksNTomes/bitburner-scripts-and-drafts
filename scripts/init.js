@@ -1,6 +1,16 @@
 /** @param {NS} ns */
 export async function main(ns) {
 
+    /** This script is meant for initializing work for a bitnode, 
+     * can be used on any bitnode depending on feature availability */
+    
+    // Utility scripts
+    // Cracker / Port Open and Nuke (cracker.js)
+    ns.exec("utils/automate/crack.js", "home", 1);
+    // Scan and Create List Textfile (scan.js)
+    ns.exec("utils/scan/note.js", "home", 1);
+    
+
     const bitnode = ns.args[0] !== null ? ns.args[0] : 1;
 
     switch (bitnode){
@@ -64,7 +74,4 @@ export async function main(ns) {
             // do nothing
             break;
     }
-
-    // run utility scripts
-
 }

@@ -1,6 +1,7 @@
 /** @param {NS} ns */
 export async function main(ns) {
     const target = ns.args[0];
+    const type = ns.args[1] !== null ? ns.args[1] : 'note';
     const home = "home";
 
     let path = [target];
@@ -19,5 +20,11 @@ export async function main(ns) {
             printedPath += `${pathString} ->`;
         }
     }
-    ns.tprintf(printedPath);
+
+    if (type !== 'note'){
+        ns.tprintf(printedPath);
+    }
+    else {
+        ns.write(`texts/${target}-path.js`, printedPath, "w");
+    }
 }

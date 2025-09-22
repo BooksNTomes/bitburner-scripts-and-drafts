@@ -4,5 +4,4 @@ export async function main(ns) {
         await ns.share()
         await ns.sleep(1000)
     }
-
 }
