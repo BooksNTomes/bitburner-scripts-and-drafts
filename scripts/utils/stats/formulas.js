@@ -1,6 +1,7 @@
 /** @param {NS} ns */
 export async function main(ns) {
-    //** This script is an attempt at an alternative to the formulas.exe program */
+    //** This script is an attempt at an alternative to the formulas.exe program 
+    // - This script is starting to be my study grounds for the api functions*/
 
     // check for existence of formulas api
     const formulas = fileExists("Formulas.exe", "home") ? ns.formulas : null;
@@ -18,6 +19,8 @@ export async function main(ns) {
     // hackAnalyzeChance(host) 	Get the chance of successfully hacking a server.
     // hackAnalyzeSecurity(threads, hostname) 	Get the security increase for a number of threads.
     // hackAnalyzeThreads(host, hackAmount) 	Calculate the decimal number of threads needed to hack a specified amount of money from a target host.
+    
+    // weakenAnalyze(threads, cores) 	Predict the effect of weaken.
     
     // getServer(host) 	Returns a server object for the given server. Defaults to the running script's server if host is not specified.
     // getServerGrowth(host) 	Get a server growth parameter.
@@ -54,7 +57,6 @@ export async function main(ns) {
     // kill(filename, hostname, args) 	Terminate the script(s) with the provided filename, hostname, and script arguments.
     // killall(host, safetyGuard) 	Terminate all scripts on a server.
     // ls(host, substring) 	List files on a server.
-    // weakenAnalyze(threads, cores) 	Predict the effect of weaken.
 
     // formulas functions
 
@@ -86,7 +88,4 @@ export async function main(ns) {
     // hackPercent(server, player) 	Calculate hack percent for one thread. (Ex: 0.25 would steal 25% of the server's current value.)
     // hackTime(server, player) 	Calculate hack time.
     // weakenTime(server, player) 	Calculate weaken time.
-    // 
-
-
 }
