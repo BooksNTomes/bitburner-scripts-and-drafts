@@ -5,7 +5,6 @@ export async function main(ns) {
      * - an attempt at managing the grow-weaken-hack scripts in hacking a target server
      * - implements 'loop algorithm'
      * - RAM: 5.25GB
-     * - TODO : Optimize
      */
 
     // Basic Parameters
@@ -34,7 +33,7 @@ export async function main(ns) {
     for (let i = 0; i < servers.length; i++){
         let server = servers[i];
         let ports = ns.getServer(server).openPortCount;
-        if (ports === ns.getServerNumPortsRequired(server) || server.includes("pserv")){
+        if (ports === ns.getServerNumPortsRequired(server) || server.includes(pserv)){
             totalRam += ns.getServerMaxRam(server);
         }
     }
@@ -53,7 +52,7 @@ export async function main(ns) {
         let maxThreads = ns.getServerMaxRam(server) / Math.ceil(avgScriptRam);
         let addedThreads = 0;
         
-        if (threads < gi && (ports === ns.getServerNumPortsRequired(server) || server.includes("pserv"))){
+        if (threads < gi && (ports === ns.getServerNumPortsRequired(server) || server.includes(pserv))){
             let currAddedThreads = 0;
             while (threads + addedThreads < gi && addedThreads < maxThreads){
                 addedThreads+=1;
@@ -65,7 +64,7 @@ export async function main(ns) {
             threads += currAddedThreads;
         }
         
-        if (threads < wi && (ports === ns.getServerNumPortsRequired(server) || server.includes("pserv"))){
+        if (threads < wi && (ports === ns.getServerNumPortsRequired(server) || server.includes(pserv))){
             let currAddedThreads = 0;
             while (threads + addedThreads < wi && addedThreads < maxThreads){
                 addedThreads+=1;
@@ -77,7 +76,7 @@ export async function main(ns) {
             threads += currAddedThreads;
         }
         
-        if (threads >= wi && (ports === ns.getServerNumPortsRequired(server) || server.includes("pserv"))) {
+        if (threads >= wi && (ports === ns.getServerNumPortsRequired(server) || server.includes(pserv))) {
             let currAddedThreads = 0;
             while (threads + addedThreads >= wi && addedThreads < maxThreads){
                 addedThreads+=1;
