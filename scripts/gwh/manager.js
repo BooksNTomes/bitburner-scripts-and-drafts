@@ -24,11 +24,6 @@ export async function main(ns) {
     }
     servers = servers.filter((server) => server !== "home");
 
-    // Initial Ratio [Testing]
-    let hackThreadRatio = .01;
-    let growThreadRatio = .50;
-    let weakenThreadRatio = .49;
-
     let totalRam = 0;
     for (let i = 0; i < servers.length; i++){
         let server = servers[i];
@@ -38,6 +33,11 @@ export async function main(ns) {
         }
     }
 
+    // Initial Ratio [Testing]
+    let hackThreadRatio = .01;
+    let growThreadRatio = .50;
+    let weakenThreadRatio = .49;
+    
     let hackThreads = Math.floor(hackThreadRatio * (totalRam / Math.ceil(avgScriptRam)));
     let groThreads = Math.floor(growThreadRatio * (totalRam / Math.ceil(avgScriptRam)));
     let weakenThreads = Math.floor(weakenThreadRatio * (totalRam / Math.ceil(avgScriptRam)));

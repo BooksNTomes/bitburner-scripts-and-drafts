@@ -9,7 +9,7 @@ export async function main(ns) {
     if (ns.hacknet.numNodes < 1){
         ns.hacknet.purchaseNode();
     }
-    ns.exec("hacknet-auto-purchase.js", "home", 1);
-    ns.exec("hacknet-auto-upgrade.js", "home", 1)
-    
+
+    ns.exec("hacknet/purchase.js", "home", 1);
+    ns.exec("hacknet/upgrade.js", "home", 1);
 }

@@ -15,5 +15,6 @@ export async function main(ns) {
 
     for (let i = 0; i < keyTargets.length; i++){
         ns.exec("utils/scan/path.js", "home", 1, keyTargets[i], 'note');
+        await ns.sleep(1000);
     }
 }

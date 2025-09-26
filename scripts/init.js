@@ -4,19 +4,25 @@ export async function main(ns) {
     /** This script is meant for initializing work for a bitnode, 
      * can be used on any bitnode depending on feature availability */
     
-    // Utility scripts
-    // Cracker / Port Open and Nuke (cracker.js)
-    ns.exec("utils/automate/crack.js", "home", 1);
-    // Scan and Create List Textfile (scan.js)
-    ns.exec("utils/scan/note.js", "home", 1);
-    
+    const utilityScripts = ns.args[1];
 
+    // Starting Utility scripts
+    if (utilityScripts){
+        // Cracker / Port Open and Nuke (cracker.js)
+        ns.exec("utils/automate/crack.js", "home", 1);
+        await ns.sleep(5000);
+        // Scan and Create List Textfile (scan.js)
+        ns.exec("utils/scan/note.js", "home", 1);
+        await ns.sleep(5000);
+    }
+    
     const bitnode = ns.args[0] !== null ? ns.args[0] : 1;
 
     switch (bitnode){
         case 1:
             // run init-hack.js
             // for bitnode 1 / hack focused bitnodes
+            ns.exec("init/hack.js");
             break;
         case 2:
             // run init-gangs.js
