@@ -25,6 +25,6 @@ export async function main(ns) {
         ns.tprintf(printedPath);
     }
     else {
-        ns.write(`texts/${target}-path.js`, printedPath, "w");
+        ns.write(`texts/${target}-path.txt`, printedPath, "w");
     }
 }

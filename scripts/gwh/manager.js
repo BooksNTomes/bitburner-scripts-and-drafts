@@ -59,7 +59,7 @@ export async function main(ns) {
                 currAddedThreads+=1;
             }
             if (currAddedThreads !== 0){
-                ns.exec("gwh/hack.js", server, currAddedThreads, targettedServer);
+                ns.exec("gwh/scp/hack.js", server, currAddedThreads, targettedServer);
             }
             threads += currAddedThreads;
         }
@@ -71,7 +71,7 @@ export async function main(ns) {
                 currAddedThreads+=1;
             }
             if (currAddedThreads !== 0){
-                ns.exec("gwh/grow.js", server, currAddedThreads, targettedServer);
+                ns.exec("gwh/scp/grow.js", server, currAddedThreads, targettedServer);
             }
             threads += currAddedThreads;
         }
@@ -83,7 +83,7 @@ export async function main(ns) {
                 currAddedThreads+=1;
             }
             if (currAddedThreads !== 0){
-                ns.exec("gwh/weaken.js", server, currAddedThreads, targettedServer);
+                ns.exec("gwh/scp/weaken.js", server, currAddedThreads, targettedServer);
             }
             threads += currAddedThreads;
         }

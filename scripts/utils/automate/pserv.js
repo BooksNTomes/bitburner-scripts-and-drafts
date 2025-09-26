@@ -29,14 +29,14 @@ export async function main(ns) {
             let neighbors = ns.scan(servers[i]);
 
             for (let j = 0; j<neighbors.length; j++){
-                if (neighbors[j].includes(pserv)) {
+                if (neighbors[j].includes("pserv")) {
                     servers.push(neighbors[j]);
                 }
             }
         }
 
         for (let i = 0; i < servers.length; i++){
-            while (ns.getServerMoneyAvailable("home") <= ns.getPurchasedServerCost("pserv-" + i, ram)){
+            while (ns.getServerMoneyAvailable("home") <= ns.getPurchasedServerUpgradeCost("pserv-" + i, ram)){
                 await ns.sleep(10000);
             }
             ns.upgradePurchasedServer("pserv-" + i, ram);

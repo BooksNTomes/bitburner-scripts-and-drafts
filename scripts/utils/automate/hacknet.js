@@ -6,7 +6,7 @@ export async function main(ns) {
      * - total profits of the hacknet server nodes, then upgrade or buy a server.
      */
 
-    if (ns.hacknet.numNodes < 1){
+    if (ns.hacknet.numNodes() < 1){
         ns.hacknet.purchaseNode();
     }
 

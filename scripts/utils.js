@@ -26,6 +26,7 @@ export async function main(ns) {
             break;
         case 'redPillPoints':
             ns.exec('utils/scan/keypoints.js', 'home', 1, true);
+            break;
         default:
             break;
     }

@@ -10,7 +10,7 @@ export async function main(ns) {
         return totalProduction;
     }
 
-    let initialProduction = getTotalProduction(n);
+    let initialProduction = getTotalProduction(ns);
     while (true){
         const currentProduction = getTotalProduction(ns) - initialProduction;
 

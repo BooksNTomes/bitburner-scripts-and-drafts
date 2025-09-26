@@ -2,7 +2,7 @@
 export async function main(ns) {
     while (true){
 
-        function debugLogs(ns, currentProduction){
+        function debugLogs(ns, currentProduction, i){
             ns.print(`Checking if upgrading level`);
             ns.print(`${currentProduction} > ${(2 * ns.hacknet.getLevelUpgradeCost(i, 1))}?`);
             ns.print(`${currentProduction > (2 * ns.hacknet.getLevelUpgradeCost(i, 1))}`);
@@ -26,7 +26,7 @@ export async function main(ns) {
             for(let i = 0; i < currentNodes; i++){
                 let currentProduction = ns.hacknet.getNodeStats(i).totalProduction - initialProductionList[i];
                 
-                debugLogs(ns, currentProduction);
+                debugLogs(ns, currentProduction, i);
 
                 if ((currentProduction > (2 * ns.hacknet.getLevelUpgradeCost(i, 1))) &&
                 ns.getServerMoneyAvailable("home") > (1.5 * ns.hacknet.getLevelUpgradeCost(i, 1)))
@@ -46,7 +46,7 @@ export async function main(ns) {
                     ns.hacknet.upgradeCore(i, 1);
                 }
 
-                if (nodeCount !== ns.hacknet.numNodes()){
+                if (currentNodes !== ns.hacknet.numNodes()){
                   break;
                 }
                 

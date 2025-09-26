@@ -14,9 +14,15 @@ export async function main(ns) {
         // Scan and Create List Textfile (scan.js)
         ns.exec("utils/scan/note.js", "home", 1);
         await ns.sleep(5000);
+        // Scan for Keypoints
+        ns.exec("utils/scan/keypoints.js", "home", 1, false)
+        await ns.sleep(5000);
     }
     
-    const bitnode = ns.args[0] !== null ? ns.args[0] : 1;
+    let bitnode = ns.args[0];
+    if (ns.args[0] === null){
+        bitnode = 1;
+    }
 
     switch (bitnode){
         case 1:

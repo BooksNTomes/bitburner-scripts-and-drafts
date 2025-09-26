@@ -1,6 +1,6 @@
 /** @param {NS} ns */
 export async function main(ns) {
-    const redPill = ns.args[0] === 'yes' ? true : false;
+    const redPill = ns.args[0];
     const keyTargets = [
         "CSEC",
         "avmnite-02h",

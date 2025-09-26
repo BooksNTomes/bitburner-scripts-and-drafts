@@ -48,5 +48,5 @@ export async function main(ns) {
         data += `Growth Rate: ${server.serverGrowth}\n`;
         data += "\n";
     }
-    ns.write("scan-results.txt", data, "w");
+    ns.write("texts/note.txt", data, "w");
 }
