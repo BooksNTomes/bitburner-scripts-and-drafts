@@ -33,10 +33,12 @@ export async function main(ns) {
         case 2:
             // run init-gangs.js
             // for bitnode 2 / gang focused bitnodes
+            ns.exec("init/gang.js");
             break;
         case 3: 
             // run init-corporations.js
             // for bitnode 3 / corporation focused bitnodes
+            ns.exec("init/corporation.js");
             break;
         case 4:
             // run init-singularity.js
