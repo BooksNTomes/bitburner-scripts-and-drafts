@@ -1,7 +1,7 @@
 /** @param {NS} ns */
 export async function main(ns) {
 
-    const destPath = "gwh/scp"
+    const destPath = "scp"
 
     // Get all servers
     let servers = ['home'];
