@@ -12,13 +12,6 @@ export async function main(ns) {
 
     // Basic Parameters
     let data = [];
-    let _dataItem = [
-        'servername',
-        'script',
-        'threads',
-        'targettedserver',
-        'executiontime'
-    ];
     const avgScriptRam = 1.75;
     const targettedServer = ns.args[0];
     const pserv = "pserv";
@@ -110,12 +103,17 @@ export async function main(ns) {
         }
     }
 
+    let returnData = [[],[],[]]
     for (let i = 0; i < data.length; i++){
-        ns.tprintf(`Server: ${data[i][0]}
-                    Script: ${data[i][1]}
-                    Threads: ${data[i][2]}
-                    TargetServer: ${data[i][3]}
-                    ExecutionTime: ${data[i][4]} `)
+        if (data[i][1] === 'weaken'){
+            returnData[0].push(data[i]);
+        }
+        else if (data[i][1] === 'grow'){
+            returnData[1].push(data[i]);
+        }
+        else if (data[i][1] === 'hack'){
+            returnData[2].push(data[i]);
+        }
     }
 
 }
