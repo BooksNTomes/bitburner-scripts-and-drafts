@@ -3,7 +3,7 @@ export async function main(ns) {
 
     /** This script is an attempt to make the HGW algorithm work and optimize profits. */
     let timeParams = [];
-    let targettedServer;
+    const targettedServer = ns.args[0];
     let data = [];
     
     while (true){
@@ -19,7 +19,6 @@ export async function main(ns) {
         const getData = () => {
             let data = [];
             const avgScriptRam = 1.75;
-            const targettedServer = ns.args[0];
             const pserv = "pserv";
 
             // GET Servers
@@ -58,6 +57,11 @@ export async function main(ns) {
             let groThreads = Math.floor(growThreadRatio * (totalRam / Math.ceil(avgScriptRam)));
             let weakenThreads = Math.floor(weakenThreadRatio * (totalRam / Math.ceil(avgScriptRam)));
 
+            if (hackThreads === 0){
+              hackThreads = 1;
+              groThreads = groThreads - 1;
+            }
+
             let gi = hackThreads;
             let wi = hackThreads + groThreads;
 
@@ -76,10 +80,15 @@ export async function main(ns) {
                         currAddedThreads+=1;
                     }
                     if (currAddedThreads !== 0){
-                        data.push([server, 'hack', currAddedThreads, targettedServer, ns.getHackTime(targettedServer)])
+                        // data.push([server, 'hack', currAddedThreads, targettedServer, ns.getHackTime(targettedServer)])
+                        data.push({
+                          serverName: server,
+                          script: 'hack',
+                          threads: currAddedThreads,
+                        })
                         // ns.exec("gwh/scp/hack.js", server, currAddedThreads, targettedServer);
                     }
-                    threads += currAddedThreads;s
+                    threads += currAddedThreads;
                 }
                 
                 if (threads < wi && (ports === ns.getServerNumPortsRequired(server) || server.includes(pserv))){
@@ -89,7 +98,12 @@ export async function main(ns) {
                         currAddedThreads+=1;
                     }
                     if (currAddedThreads !== 0){
-                        data.push([server, 'weaken', currAddedThreads, targettedServer, ns.getGrowTime(targettedServer)])
+                        // data.push([server, 'weaken', currAddedThreads, targettedServer, ns.getGrowTime(targettedServer)])
+                        data.push({
+                          serverName: server,
+                          script: 'weaken',
+                          threads: currAddedThreads,
+                        })
                         // ns.exec("gwh/scp/grow.js", server, currAddedThreads, targettedServer);
                     }
                     threads += currAddedThreads;
@@ -102,7 +116,12 @@ export async function main(ns) {
                         currAddedThreads+=1;
                     }
                     if (currAddedThreads !== 0){
-                        data.push([server, 'grow', currAddedThreads, targettedServer, ns.getWeakenTime(targettedServer)])
+                        // data.push([server, 'grow', currAddedThreads, targettedServer, ns.getWeakenTime(targettedServer)])
+                        data.push({
+                          serverName: server,
+                          script: 'grow',
+                          threads: currAddedThreads,
+                        })
                         // ns.exec("gwh/scp/weaken.js", server, currAddedThreads, targettedServer);
                     }
                     threads += currAddedThreads;
@@ -111,13 +130,13 @@ export async function main(ns) {
 
             let returnData = [[],[],[]]
             for (let i = 0; i < data.length; i++){
-                if (data[i][1] === 'weaken'){
+                if (data[i].script === 'weaken'){
                     returnData[0].push(data[i]);
                 }
-                else if (data[i][1] === 'grow'){
+                else if (data[i].script === 'grow'){
                     returnData[1].push(data[i]);
                 }
-                else if (data[i][1] === 'hack'){
+                else if (data[i].script === 'hack'){
                     returnData[2].push(data[i]);
                 }
             }
@@ -140,7 +159,18 @@ export async function main(ns) {
 
         // Weaken - Grow - Hack 
         const data = getData();
-        for (let i = 0; i < data.length; i++){
+
+
+        // for (let i = 0; i < data.length; i++){
+        //   for (let j = 0; j < data[i].length; j++) {
+        //       ns.print(`scp/${data[i][j].script}.js, ${data[i][j].serverName}, ${data[i][j].threads}, ${targettedServer}`)
+        //       // ns.exec(`scp/${data[i][j].script}.js`, data[i][j].serverName, data[i][j].threads, targettedServer);
+        //   }
+        // }
+        // break;
+
+        
+        for (let i = 0; i < 3; i++){
 
             if (i === WEAKEN){
                 await ns.sleep(0);
@@ -149,7 +179,7 @@ export async function main(ns) {
                 await ns.sleep((timeParams[2] + 20) - timeParams[1]);
             }
             else if (i === HACK){
-                await ns.sleep((timeParams[2] + 40) - timeParams[0]);
+                await ns.sleep((((timeParams[2] + 20) - timeParams[1]) + timeParams[1]) - timeParams[0]);
             }
 
             for (let j = 0; j < data[i].length; j++) {
@@ -157,6 +187,11 @@ export async function main(ns) {
             }
 
         }
+
+        await ns.sleep(10000);
+    }
+
+}
 
         // initial prototype loop, to be changed to call all 'weaken' first, then cal 'all' grow next and so on.
         // for (let i = 0; i < data.length; i++){
@@ -172,9 +207,3 @@ export async function main(ns) {
         //     ns.exec(`scp/${data[i].script}.js`, data[i].serverName, data[i].threads, targettedServer);
             
         // }
-
-        await ns.sleep(10000);
-    }
-
-
-}
