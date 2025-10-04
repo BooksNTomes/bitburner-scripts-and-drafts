@@ -2,9 +2,7 @@
 export async function main(ns) {
     const target = ns.args[0];
     try {
-      while (true){
-          await ns.weaken(target);
-      }
+        await ns.weaken(target);
     } catch (err) {
       // Do Nothing
     }

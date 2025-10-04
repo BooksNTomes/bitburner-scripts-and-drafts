@@ -160,26 +160,16 @@ export async function main(ns) {
         // Weaken - Grow - Hack 
         const data = getData();
 
-
-        // for (let i = 0; i < data.length; i++){
-        //   for (let j = 0; j < data[i].length; j++) {
-        //       ns.print(`scp/${data[i][j].script}.js, ${data[i][j].serverName}, ${data[i][j].threads}, ${targettedServer}`)
-        //       // ns.exec(`scp/${data[i][j].script}.js`, data[i][j].serverName, data[i][j].threads, targettedServer);
-        //   }
-        // }
-        // break;
-
-        
         for (let i = 0; i < 3; i++){
 
             if (i === WEAKEN){
                 await ns.sleep(0);
             }
             else if (i === GROW){
-                await ns.sleep((timeParams[2] + 20) - timeParams[1]);
+                await ns.sleep((timeParams[2] + 200) - timeParams[1]);
             }
             else if (i === HACK){
-                await ns.sleep((((timeParams[2] + 20) - timeParams[1]) + timeParams[1]) - timeParams[0]);
+                await ns.sleep(((timeParams[2] + 400)) - timeParams[0]);
             }
 
             for (let j = 0; j < data[i].length; j++) {
@@ -192,18 +182,3 @@ export async function main(ns) {
     }
 
 }
-
-        // initial prototype loop, to be changed to call all 'weaken' first, then cal 'all' grow next and so on.
-        // for (let i = 0; i < data.length; i++){
-        //     // Based on hacktime/growtime/weakentime calculations, execute script with needed time
-            
-        //     // Awaits to synchronize with previous function
-        //     if (data[i].script === 'weaken'){
-        //         await ns.sleep(data[i].executionTime - (timeParams[2]));
-        //     }
-        //     else if (data[i].script === 'grow') {
-        //         await ns.sleep(data[i].executionTime - (timeParams[2] + 20));
-        //     }
-        //     ns.exec(`scp/${data[i].script}.js`, data[i].serverName, data[i].threads, targettedServer);
-            
-        // }
