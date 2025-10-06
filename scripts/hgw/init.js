@@ -4,7 +4,6 @@ export async function main(ns) {
     /** This script is an attempt to make the HGW algorithm work and optimize profits. */
     let timeParams = [];
     const targettedServer = ns.args[0];
-    let data = [];
     
     while (true){
         /** We'll need these functions to figure out how to optimize the hack grow weaken flow */
@@ -15,6 +14,46 @@ export async function main(ns) {
         /** We'll then need to execute the scripts using server data, with the required threads, and as
          * well as the proper timing, using await.sleep(optimal milliseconds)
          */
+
+        function getData(ns) {
+            const dataAnalysis = []
+            const avgScriptRam = 1.75;
+
+            // Get Servers
+            let servers = ['home'];
+            for (let i = 0; i < servers.length; i++){
+                let neighbors = ns.scan(servers[i]);
+
+                for (let j = 0; j<neighbors.length; j++){
+                    if (!servers.includes(neighbors[j])) {
+                        servers.push(neighbors[j]);
+                    }
+                }
+            }
+            servers = servers.filter((server) => server !== "home");
+            // GET RAM Available *From Nuked Servers*
+            let totalRam = 0;
+            for (let i = 0; i < servers.length; i++){
+                let server = servers[i];
+                let ports = ns.getServer(server).openPortCount;
+                if (ports === ns.getServerNumPortsRequired(server) || server.includes(pserv)){
+                    totalRam += ns.getServerMaxRam(server);
+                }
+            }
+            const totalThreads = (totalRam / Math.ceil(avgScriptRam));
+            // Assign Thread Ratios (hack, weaken, grow)
+            const defaultThreadsRatios = [0.01, 0.49, .50];
+
+            // Get Threads Required For Hacking 25% of the target's current money
+            // Get Threads Required For Growing all lost money
+            // Get Threads Required For Countering Grow or Hack
+
+            const hackAnalysis = ns.hackAnalyzeThreads(targettedServer, ns.getServerMoneyAvailable(targettedServer));
+            const growAnalysis = ns.growthAnalyze(targettedServer, multiplier, 1);
+            const weakenAnalysis = ns.weakenAnalyze(totalThreads * defaultThreadsRatios[2]);
+            const assignedThreads = []
+            
+        }
 
         // TODO: utilize Thread Analysis for best thread proportions for countering grow and countering hack
         const getData = () => {
@@ -148,15 +187,18 @@ export async function main(ns) {
          *  * - execution period - most important part is the end, as the end is the trigger point.
          *  & - sleep duration - to enable synchronization, even if it results in not 'the most optimized per millisecond' algorithm
          * 
-         * weaken usually takes longest:                **************&&&
-         * grow does not take as long:                       **********&&
-         * hack takes the fastest, and must be delayed:             ****&
+         * weaken usually takes longest:                **************
+         * grow does not take as long:                  **********
+         * hack takes the fastest:                      ***
          * 
          * One optimized cycle looks like this:
+         * Get Data Analysis
+         * Set Thread Assignments
          * Weaken: *********************|
          * Grow:         *****************|
          * Weaken:                         **************|
          * Hack:                                       ****
+         * Restart
          */
 
         const WEAKEN = 0;
