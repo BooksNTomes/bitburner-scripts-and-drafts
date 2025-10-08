@@ -13,4 +13,10 @@ export async function main(ns) {
         await ns.sleep(1000);
     }
 
+    // Execute scp scripts immediately
+    ns.exec('gwh/scp.js', 'home', 1);
+    await ns.sleep(1500);
+    ns.exec('hgw/scp.js', 'home', 1);
+    await ns.sleep(1500);
+
 }

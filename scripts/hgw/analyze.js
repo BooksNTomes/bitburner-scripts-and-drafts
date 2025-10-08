@@ -42,4 +42,19 @@ export async function main(ns) {
     */
    let weakenThreads = 20;
    console.log(`weaken with ${weakenThreads} results in ${ns.weakenAnalyze(weakenThreads, cores)}`)
+
+   /** Requires above test for trial and error observation */
+
+    /** Thread assignment experiment 
+     * - from a certain thread count available, assign threads for certain operations (hack, weaken, grow)
+     * 
+    */
+
+    let threadTotal = 10;
+    let assignedHackThreads = 0;
+    let assignedGrowThreads = 0;
+    let assignedWeakenThreads = 0;
+
+
+
 }

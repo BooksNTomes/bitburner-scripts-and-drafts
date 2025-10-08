@@ -17,7 +17,14 @@ export async function main(ns) {
         }
         ns.purchaseServer("pserv-" + i, ram);
         ++i;
-        await ns.sleep(1000);
+
+        // Execute scp scripts immediately
+        ns.exec('gwh/scp.js', 'home', 1);
+        await ns.sleep(1500);
+        ns.exec('hgw/scp.js', 'home', 1);
+        await ns.sleep(1500);
+
+        await ns.sleep(2000);
     }
 
     // Continued Upgrade
@@ -43,5 +50,7 @@ export async function main(ns) {
         }
         
         ram *= 2;
+
+        await ns.sleep(300000); // Await 5 minutes to give time for money to regrow
     }
 }
