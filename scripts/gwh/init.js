@@ -5,7 +5,7 @@ export async function main(ns) {
     /** This script kickstarts the gwh-loop process 
      * and is also used for resetting the whole process */
     
-    ns.exec("gwh/killall.js", "home", 1);
+    ns.exec("utils/automate/killall.js", "home", 1);
     await ns.sleep(5000);
     ns.exec("gwh/scp.js", "home", 1);
     await ns.sleep(5000);

@@ -1,28 +1,17 @@
 /** @param {NS} ns */
 export async function main(ns) {
 
-    /** This script is an attempt to make the HGW algorithm work and optimize profits. */
-    let timeParams = [];
-    const targettedServer = ns.args[0];
-    let data = [];
+    const targetServer = ns.args[0];
     
     while (true){
-        /** We'll need these functions to figure out how to optimize the hack grow weaken flow */
-        timeParams = [  ns.getHackTime(targettedServer), 
-                        ns.getGrowTime(targettedServer), 
-                        ns.getWeakenTime(targettedServer)];
 
-        /** We'll then need to execute the scripts using server data, with the required threads, and as
-         * well as the proper timing, using await.sleep(optimal milliseconds)
-         */
+        hackTime = ns.getHackTime(targetServer);
+        growTime = ns.getGrowTime(targetServer);
+        weakenTime = ns.getWeakenTime(targetServer);
 
-        // TODO: utilize Thread Analysis for best thread proportions for countering grow and countering hack
-        const getData = () => {
-            let data = [];
+        function getData(ns) {
             const avgScriptRam = 1.75;
-            const pserv = "pserv";
 
-            // GET Servers
             let servers = ['home'];
             for (let i = 0; i < servers.length; i++){
                 let neighbors = ns.scan(servers[i]);
@@ -35,7 +24,7 @@ export async function main(ns) {
             }
             servers = servers.filter((server) => server !== "home");
 
-            // GET RAM Available
+
             let totalRam = 0;
             for (let i = 0; i < servers.length; i++){
                 let server = servers[i];
@@ -45,18 +34,14 @@ export async function main(ns) {
                 }
             }
 
-            // GET RAM Assignments
-            /**
-             * 1. Thread Ratios: 
-             * 2. Set Thread Counts/Indices
-             */
-            let hackThreadRatio = .01;
-            let growThreadRatio = .50;
-            let weakenThreadRatio = .49;
+            const totalThreads = (totalRam / Math.ceil(avgScriptRam));
+            let hackThreadRatio = .10;
+            let growThreadRatio = .45;
+            let weakenThreadRatio = .45;
             
-            let hackThreads = Math.floor(hackThreadRatio * (totalRam / Math.ceil(avgScriptRam)));
-            let groThreads = Math.floor(growThreadRatio * (totalRam / Math.ceil(avgScriptRam)));
-            let weakenThreads = Math.floor(weakenThreadRatio * (totalRam / Math.ceil(avgScriptRam)));
+            let hackThreads = Math.floor(hackThreadRatio * totalThreads);
+            let groThreads = Math.floor(growThreadRatio * totalThreads);
+            let weakenThreads = Math.floor(weakenThreadRatio * totalThreads);
 
             if (hackThreads === 0){
               hackThreads = 1;
@@ -81,13 +66,11 @@ export async function main(ns) {
                         currAddedThreads+=1;
                     }
                     if (currAddedThreads !== 0){
-                        // data.push([server, 'hack', currAddedThreads, targettedServer, ns.getHackTime(targettedServer)])
                         data.push({
                           serverName: server,
                           script: 'hack',
                           threads: currAddedThreads,
                         })
-                        // ns.exec("gwh/scp/hack.js", server, currAddedThreads, targettedServer);
                     }
                     threads += currAddedThreads;
                 }
@@ -99,13 +82,11 @@ export async function main(ns) {
                         currAddedThreads+=1;
                     }
                     if (currAddedThreads !== 0){
-                        // data.push([server, 'weaken', currAddedThreads, targettedServer, ns.getGrowTime(targettedServer)])
                         data.push({
                           serverName: server,
                           script: 'weaken',
                           threads: currAddedThreads,
                         })
-                        // ns.exec("gwh/scp/grow.js", server, currAddedThreads, targettedServer);
                     }
                     threads += currAddedThreads;
                 }
@@ -117,19 +98,18 @@ export async function main(ns) {
                         currAddedThreads+=1;
                     }
                     if (currAddedThreads !== 0){
-                        // data.push([server, 'grow', currAddedThreads, targettedServer, ns.getWeakenTime(targettedServer)])
                         data.push({
                           serverName: server,
                           script: 'grow',
                           threads: currAddedThreads,
                         })
-                        // ns.exec("gwh/scp/weaken.js", server, currAddedThreads, targettedServer);
                     }
                     threads += currAddedThreads;
                 }
             }
 
             let returnData = [[],[],[]]
+
             for (let i = 0; i < data.length; i++){
                 if (data[i].script === 'weaken'){
                     returnData[0].push(data[i]);
@@ -141,50 +121,50 @@ export async function main(ns) {
                     returnData[2].push(data[i]);
                 }
             }
-            return returnData;
+
+            return { weakenCrew, growCrew, hackCrew };
         }
 
-        /** Optimizing the loop, and possibly sustainably:
-         *  * - execution period - most important part is the end, as the end is the trigger point.
-         *  & - sleep duration - to enable synchronization, even if it results in not 'the most optimized per millisecond' algorithm
-         * 
-         * weaken usually takes longest:                **************&&&
-         * grow does not take as long:                       **********&&
-         * hack takes the fastest, and must be delayed:             ****&
-         * 
-         * One optimized cycle looks like this:
-         * Weaken: *********************|
-         * Grow:         *****************|
-         * Weaken:                         **************|
-         * Hack:                                       ****
-         */
+        // Weaken - Grow - Weaken - Hack
+        const { weakenCrew, growCrew, hackCrew } = getData()
 
-        const WEAKEN = 0;
-        const GROW = 1;
-        const HACK = 2;
+        // TODO: Improve cycles
+        for (let i = 0; i < 4; i++){
+            let script;
+            let crew;
 
-        // Weaken - Grow - Hack 
-        const data = getData();
-
-        for (let i = 0; i < 3; i++){
-
-            if (i === WEAKEN){
+            /** *****************************************************| */
+            if (i === 0){
+                script = 'weaken';
+                crew = weakenCrew;
                 await ns.sleep(0);
             }
-            else if (i === GROW){
-                await ns.sleep((timeParams[2] + 200) - timeParams[1]);
+            /**                      **********************************| */
+            else if (i === 1){
+                script = 'grow';
+                crew = growCrew;
+                await ns.sleep((weakenTime + 200) - growTime);
             }
+            /**                      ***********************************| */
+            else if (i === 2){
+                script = 'weaken';
+                crew = weakenCrew;
+                await ns.sleep((weakenTime + 200) - growTime)
+            }
+            /**                                                ***********| */
             else if (i === HACK){
-                await ns.sleep(((timeParams[2] + 400)) - timeParams[0]);
+                script = 'hack';
+                crew = hackCrew;
+                await ns.sleep(((weakenTime + 400)) - hackTime);
             }
 
-            for (let j = 0; j < data[i].length; j++) {
-                ns.exec(`scp/${data[i][j].script}.js`, data[i][j].serverName, data[i][j].threads, targettedServer);
+            for (let j = 0; j < crew.length; j++) {
+                ns.exec(`scp/${script}.js`, data[j].serverName, data[j].threads, targetServer);
             }
 
         }
 
-        await ns.sleep(10000);
+        await ns.sleep(1000);
     }
 
 }
