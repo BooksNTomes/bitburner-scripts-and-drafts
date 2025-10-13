@@ -3,25 +3,25 @@ export async function main(ns) {
     const gang = ns.gang;
 
     try {
-        console.log('getBonusTime()', gang.getBonusTime()); 
+        ns.print('getBonusTime()', gang.getBonusTime()); 
         // 	Get bonus time.
     
-        console.log('getEquipmentNames()', gang.getEquipmentNames()); 
+        ns.print('getEquipmentNames()', gang.getEquipmentNames()); 
         // 	List equipment names.
     
-        console.log('getGangInformation()', gang.getGangInformation()); 
+        ns.print('getGangInformation()', gang.getGangInformation()); 
         // 	Get information about your gang.
     
-        console.log('getMemberNames()', gang.getMemberNames()); 
+        ns.print('getMemberNames()', gang.getMemberNames()); 
         // 	List all gang members.
     
-        console.log('getOtherGangInformation()', gang.getOtherGangInformation()) 
+        ns.print('getOtherGangInformation()', gang.getOtherGangInformation()) 
         // 	Get information about the other gangs.
     
-        console.log('getRecruitsAvailable()', gang.getRecruitsAvailable()); 
+        ns.print('getRecruitsAvailable()', gang.getRecruitsAvailable()); 
         // 	Check how many gang members you can currently recruit.
     } catch (error) {
-        console.log(`Error encountered in gangStats: ${error}`)
+        ns.print(`Error encountered in gangStats: ${error}`)
     }
 }
 

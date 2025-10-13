@@ -4,7 +4,7 @@ export async function main(ns) {
     /** Experimental Script For Analyzing Server Optimal Thread Assignments */
     let tempTarget = 'n00dles';
     let cores = 1;
-    console.log(`Target is ${tempTarget}`);
+    ns.print(`Target is ${tempTarget}`);
     
     /** Analysis functions
      * hackAnalyze(host) 	                    Get the part of money stolen with a single thread.
@@ -24,8 +24,8 @@ export async function main(ns) {
     for (let i = 0; i < hackThreads; i++){
         hackTotal += hackAnalyze(tempTarget);
     }
-    console.log(`${hackThreads} hack threads results in ${hackTotal}`)
-    console.log(`checking with hackAnalyzeThreads: ${ns.hackAnalyzeThreads(tempTarget, hackTotal)}`);
+    ns.print(`${hackThreads} hack threads results in ${hackTotal}`)
+    ns.print(`checking with hackAnalyzeThreads: ${ns.hackAnalyzeThreads(tempTarget, hackTotal)}`);
 
     /** Grow Thread Experiment 
      * - Check for effects of a given multiplicative growth factor
@@ -35,13 +35,13 @@ export async function main(ns) {
     let targetMoney = ns.getMoneyAvailable(tempTarget);
     growTotal = targetMoney + (targetMoney * multiplier);
     let growThreads = ns.growthAnalyze(tempTarget, multiplier, cores);
-    console.log(`${growThreads} grow threads results in ${growTotal}`);
+    ns.print(`${growThreads} grow threads results in ${growTotal}`);
     
     /** Weaken Threads Experiment 
      * - Check for power of weakenat 1 core
     */
    let weakenThreads = 20;
-   console.log(`weaken with ${weakenThreads} results in ${ns.weakenAnalyze(weakenThreads, cores)}`)
+   ns.print(`weaken with ${weakenThreads} results in ${ns.weakenAnalyze(weakenThreads, cores)}`)
 
    /** Requires above test for trial and error observation */
 
