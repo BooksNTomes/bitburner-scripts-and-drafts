@@ -2,6 +2,9 @@
 - A growing compilation of my scripts and annotations on sample scripts used in playing Bitburner and interacting with its APIs.
 - This is mainly created for fun and learning.
 
+# Todos as of : 10-18-2025
+- Working on hgw script stat analysis for better thread allocation
+
 # Update : 09-26-2025
 - scripts are overhauled and is structured for future bitnode runs.
 - init.js and utils.js are the main programs used to activate the automation flows / etc.
