@@ -8,6 +8,7 @@ export async function main(ns) {
     while (true){
         for (let i = 0; i < materials.length; i++){
             ns.print(getMaterialData(materials[i]));
+            await ns.sleep(10000)
         }
     }
 

@@ -17,33 +17,47 @@ export async function main(ns) {
     */
 
     /** Hack Thread Experiment 
-    * - Check if hackTotal == actualHackingMoneyGain
+     * - Check if hackTotal == actualHackingMoneyGain
     */
-    let hackThreads = 5;
+    let hackThreads = 1;
     let hackTotal = 0;
     for (let i = 0; i < hackThreads; i++){
-        hackTotal += hackAnalyze(tempTarget);
+        hackTotal += ns.hackAnalyze(tempTarget);
     }
-    ns.print(`${hackThreads} hack threads results in ${hackTotal}`)
-    ns.print(`checking with hackAnalyzeThreads: ${ns.hackAnalyzeThreads(tempTarget, hackTotal)}`);
+    ns.print(`${hackThreads} hack threads results in ${hackTotal * ns.getServerMoneyAvailable(tempTarget)}`)
+    ns.print(`checking with hackAnalyzeThreads: ${ns.hackAnalyzeThreads(tempTarget, hackTotal * ns.getServerMoneyAvailable(tempTarget))}`);
+
+    /** Resutlts
+     * hackTotal is actually the fraction showing: 'actual money stolen' / 'total money in the server'
+     * it follows that the actual hacktotal is "hackTotal * ns.getServerMoneyAvailable"
+    */
 
     /** Grow Thread Experiment 
      * - Check for effects of a given multiplicative growth factor
     */
-    let multiplier = 0.2;
+    let multiplier = 1.2;
     let growTotal = 0;
-    let targetMoney = ns.getMoneyAvailable(tempTarget);
-    growTotal = targetMoney + (targetMoney * multiplier);
+    let targetMoney = ns.getServerMoneyAvailable(tempTarget);
+    growTotal = targetMoney * multiplier;
     let growThreads = ns.growthAnalyze(tempTarget, multiplier, cores);
     ns.print(`${growThreads} grow threads results in ${growTotal}`);
     
+    /** Results
+     * - can be used for determining optimal grow threads, possibly
+     * - main limitation is the amount of available threads itself
+    */
+
     /** Weaken Threads Experiment 
      * - Check for power of weakenat 1 core
     */
-   let weakenThreads = 20;
-   ns.print(`weaken with ${weakenThreads} results in ${ns.weakenAnalyze(weakenThreads, cores)}`)
+    let weakenThreads = 10;
+    ns.print(`weaken with ${weakenThreads} results in ${ns.weakenAnalyze(weakenThreads, cores)}`)
 
-   /** Requires above test for trial and error observation */
+    /** Results
+     * - it's a constant, effects of threads stack up additively, can easily be determined
+    */
+
+    /** Requires above test for trial and error observation */
 
     /** Thread assignment experiment 
      * - from a certain thread count available, assign threads for certain operations (hack, weaken, grow)
