@@ -7,7 +7,7 @@ export async function main(ns) {
     
     ns.exec("utils/automate/killall.js", "home", 1);
     await ns.sleep(5000);
-    ns.exec("gwh/scp.js", "home", 1);
+    ns.exec("hack/gwh/scp.js", "home", 1);
     await ns.sleep(5000);
-    ns.exec("gwh/manager.js", "home", 1, target);
+    ns.exec("hack/gwh/manager.js", "home", 1, target);
 }

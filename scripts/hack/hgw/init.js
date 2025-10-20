@@ -8,8 +8,8 @@ export async function main(ns) {
     
     ns.exec("utils/automate/killall.js", "home", 1);
     await ns.sleep(5000);
-    ns.exec("hgw/scp.js", "home", 1);
+    ns.exec("hack/hgw/scp.js", "home", 1);
     await ns.sleep(5000);
-    ns.exec("hgw/manager.js", "home", 1, target);
+    ns.exec("hack/hgw/manager.js", "home", 1, target);
 
 }

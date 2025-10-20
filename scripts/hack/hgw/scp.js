@@ -1,11 +1,10 @@
 /** @param {NS} ns */
 export async function main(ns) {
 
-    const destPath = "hgw/scp"
+    const destPath = "scp/hgw"
 
     // Get all servers
     let servers = ['home'];
-    let pserv = "pserv";
     for (let i = 0; i < servers.length; i++){
         let neighbors = ns.scan(servers[i]);
 

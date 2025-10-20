@@ -28,17 +28,17 @@ export async function main(ns) {
         case 1:
             // run init-hack.js
             // for bitnode 1 / hack focused bitnodes
-            ns.exec("init/hack.js");
+            ns.exec("utils/init/hack.js");
             break;
         case 2:
             // run init-gangs.js
             // for bitnode 2 / gang focused bitnodes
-            ns.exec("init/gang.js");
+            ns.exec("utils/init/gang.js");
             break;
         case 3: 
             // run init-corporations.js
             // for bitnode 3 / corporation focused bitnodes
-            ns.exec("init/corporation.js");
+            ns.exec("utils/init/corp.js");
             break;
         case 4:
             // run init-singularity.js
