@@ -42,6 +42,11 @@ export async function main(ns) {
     let groThreads = Math.floor(growThreadRatio * (totalRam / Math.ceil(avgScriptRam)));
     let weakenThreads = Math.floor(weakenThreadRatio * (totalRam / Math.ceil(avgScriptRam)));
 
+    if (hackThreads === 0){
+        hackThreads = 1;
+        groThreads = groThreads - 1;
+    }
+
     let gi = hackThreads;
     let wi = hackThreads + groThreads;
 

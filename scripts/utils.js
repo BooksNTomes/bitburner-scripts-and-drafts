@@ -5,6 +5,15 @@ export async function main(ns) {
     const command = ns.args[0];
 
     switch(command){
+        case 'init-hack':
+            ns.exec('utils/init/hack.js', 'home', 1);
+            break;
+        case 'init-gang':
+            ns.exec('utils/init/gang.js', 'home', 1);
+            break;
+        case 'init-corp':
+            ns.exec('utils/init/corp.js', 'home', 1);
+            break;
         case 'scan-note':
             ns.exec('utils/scan/note.js', 'home', 1);
             break;
