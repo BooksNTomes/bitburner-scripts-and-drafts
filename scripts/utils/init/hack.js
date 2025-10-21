@@ -5,6 +5,6 @@ export async function main(ns) {
 
     // Hacking scripts [Current Implementation: gwh loop scripts]
     //--------------------------------------------------------------
-    ns.exec("gwh/init.js", "home", 1, startingTarget);
+    ns.exec("hack/gwh/init.js", "home", 1, startingTarget);
     //--------------------------------------------------------------
 }

@@ -159,7 +159,7 @@ export async function main(ns) {
             }
 
             for (let j = 0; j < crew.length; j++) {
-                ns.exec(`scp/${script}.js`, data[j].serverName, data[j].threads, targetServer);
+                ns.exec(`scp/hgw/${script}.js`, data[j].serverName, data[j].threads, targetServer);
             }
 
         }

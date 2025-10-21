@@ -69,6 +69,8 @@ export async function main(ns) {
     let assignedGrowThreads = 0;
     let assignedWeakenThreads = 0;
 
+    /** 1 -  */
+
 
 
 }

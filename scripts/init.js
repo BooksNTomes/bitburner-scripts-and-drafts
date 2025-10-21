@@ -4,23 +4,19 @@ export async function main(ns) {
     /** This script is meant for initializing work for a bitnode, 
      * can be used on any bitnode depending on feature availability */
     
-    const utilityScripts = ns.args[1];
-
     // Starting Utility scripts
-    if (utilityScripts){
-        // Cracker / Port Open and Nuke (cracker.js)
-        ns.exec("utils/automate/crack.js", "home", 1);
-        await ns.sleep(5000);
-        // Scan and Create List Textfile (scan.js)
-        ns.exec("utils/scan/note.js", "home", 1);
-        await ns.sleep(5000);
-        // Scan for Keypoints
-        ns.exec("utils/scan/keypoints.js", "home", 1, false)
-        await ns.sleep(5000);
-    }
+    // Cracker / Port Open and Nuke (cracker.js)
+    ns.exec("utils/automate/crack.js", "home", 1);
+    await ns.sleep(5000);
+    // Scan and Create List Textfile (scan.js)
+    ns.exec("utils/scan/note.js", "home", 1);
+    await ns.sleep(5000);
+    // Scan for Keypoints
+    ns.exec("utils/scan/keypoints.js", "home", 1, false)
+    await ns.sleep(5000);
     
     let bitnode = ns.args[0];
-    if (ns.args[0] === null){
+    if (ns.args[0] === null || ns.args[0] === undefined){
         bitnode = 1;
     }
 
