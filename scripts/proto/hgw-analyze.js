@@ -42,6 +42,9 @@ export async function main(ns) {
     let growThreads = ns.growthAnalyze(tempTarget, multiplier, cores);
     ns.print(`${growThreads} grow threads results in ${growTotal}`);
     
+    // TODO: check what growth does
+    let growth = ns.getServerGrowth(tempTarget);
+
     /** Results
      * - can be used for determining optimal grow threads, possibly
      * - main limitation is the amount of available threads itself
@@ -54,20 +57,36 @@ export async function main(ns) {
     ns.print(`weaken with ${weakenThreads} results in ${ns.weakenAnalyze(weakenThreads, cores)}`)
 
     /** Results
-     * - it's a constant, effects of threads stack up additively, can easily be determined
+     * - it's a constant 0.5, effects of threads stack up additively, can easily be determined
     */
 
     /** Requires above test for trial and error observation */
 
     /** Thread assignment experiment 
      * - from a certain thread count available, assign threads for certain operations (hack, weaken, grow)
-     * 
     */
 
-    let threadTotal = 10;
-    let assignedHackThreads = 0;
-    let assignedGrowThreads = 0;
-    let assignedWeakenThreads = 0;
+    let threadTotal = 100000;
+   
+    let n00dlesAvailableMoney = getServerMoneyAvailable(host);
+    let n00dlesMaxMoney = getServerMaxMoney(host);
+    let n00dlesSecurity = getServerSecurityLevel(tempTarget);
+    let n00dlesMinSecurity = getServerMinSecurityLevel(tempTarget);
+
+    /** Todo Idea: perhaps we can do a preliminary operation of fully weakening the server before it 
+     * undergoes the full hacking loop. For effectiveness */
+
+    /** Consideration: perhaps this hgw script is best used once we have sufficient threads? It seems that the basic script is best
+     * for starting out, then the gwh script once there is a good threadcount, and then the hgw script once there is a really good 
+     * threadcount
+     */
+
+    // We assume that we have enough threads (100000)
+
+    // Loop: Weaken Server to Base -> Create Threads for Growing Server 
+    // -> Analyze Grow Threads Effect -> Weaken Ends -> Create Counter Weaken Threads For Grow
+    // -> Create Threads for Hacking -> Weaken Ends -> Create Counter Weaken Threads For Hacking 
+    // ... -> Create Threads for Growing Server -> ...
 
     /** 1 -  */
 
